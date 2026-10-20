@@ -191,15 +191,15 @@ body:has(.id-page) { background: #001C2E; }
   gap: 16px;
   margin-top: 34px;
 }
+/* "Hosted by / Sponsored by" lockup: a normal flow element, centred under the
+   buttons, so it places predictably on desktop, tablet and mobile (rather than
+   floating over the hero art). */
 .id-hero-lockup {
-  position: absolute;
-  right: var(--id-gutter);
-  bottom: 28px;
-  width: 612px;
-  max-width: 48%;
+  display: block;
+  width: 440px;
+  max-width: 100%;
   height: auto;
-  z-index: 1;
-  pointer-events: none;
+  margin: 44px auto 0;
 }
 
 /* ── 3.3 About + Register ─────────────────────────────────────────────────── */
@@ -507,13 +507,6 @@ body:has(.id-page) { background: #001C2E; }
   .id-hero-inner { max-width: none; }
 }
 @media (max-width: 860px) {
-  .id-hero-lockup {
-    position: static;
-    display: block;
-    width: 70%;
-    max-width: 420px;
-    margin: 40px 0 0;
-  }
   .id-featured--large,
   .id-featured--small { flex-basis: 100%; }
 }
