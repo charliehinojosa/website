@@ -150,18 +150,19 @@ body:has(.id-page) { background: #001C2E; }
   background: var(--id-hero);
   padding-block: clamp(56px, 7vw, 96px) clamp(72px, 8vw, 120px);
 }
-/* The contrail is sized as a share of the hero width (not a fixed px width) so
-   its composition stays locked across viewports: the flight-path fan always
-   lands just right of the text column and the lines run to the right edge,
-   instead of crowding the text on 1440 screens or hugging the edge on wide ones.
-   Anchored to the right and vertically centred. */
+/* The contrail is full-bleed behind the content, exactly as the design calls for:
+   anchored to the right and bled slightly above the top (y -133 at 1440). Sized
+   and offset in vw (the asset is 1563px wide ≈ 108.5vw at 1440) so the whole
+   flight-path composition scales with the viewport and stays full-bleed — the
+   fan reaches the lower-left and the lines run off the top-right at every width,
+   instead of being cut off. The hero clips the overflow; text sits above (z 1). */
 .id-hero-art {
   position: absolute;
-  top: 50%;
+  top: -9.2vw;
   right: 0;
-  width: 66%;
+  width: 108.5vw;
+  min-width: 1040px;
   height: auto;
-  transform: translateY(-50%);
   pointer-events: none;
   z-index: 0;
 }
@@ -461,8 +462,10 @@ body:has(.id-page) { background: #001C2E; }
 .id-cta-art {
   position: absolute;
   right: 0;
-  bottom: 0;
-  width: 66%;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 108.5vw;
+  min-width: 1040px;
   height: auto;
   opacity: .85;
   pointer-events: none;
@@ -545,4 +548,11 @@ body:has(.id-page) { background: #001C2E; }
 
 @media (prefers-reduced-motion: reduce) {
   .id-page * { animation: none !important; transition: none !important; }
+}
+
+/* Soften the full-bleed contrail on phones so the hero/CTA text stays legible
+   over it (the wave sits behind full-width copy at this size). */
+@media (max-width: 640px) {
+  .id-hero-art { opacity: 0.5; }
+  .id-cta-art { opacity: 0.5; }
 }
