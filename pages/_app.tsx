@@ -5,6 +5,7 @@ import { Analytics } from '@vercel/analytics/react'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import MetricoolPixel from '@/components/MetricoolPixel'
 import '@/styles/globals.css'
+import '@/styles/inference-day.css'
 
 // Google Analytics 4. The Measurement ID is not secret (it ships to the
 // browser). Loaded in production only so local development doesn't send hits.

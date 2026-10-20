@@ -1,0 +1,11 @@
+{
+  "eyebrow": "AGENDA · NOVEMBER 5 · ALL TIMES PST / CET",
+  "heading": "Three hours. All live.",
+  "sessions": [
+    { "pst": "8:00 A.M.", "cet": "5:00 P.M. CET", "type": null, "title": "Welcome", "description": null, "meta": "Modelplane team · 10 min" },
+    { "pst": "8:10 A.M.", "cet": "5:10 P.M. CET", "type": "FIRESIDE CHAT", "title": "Kelsey Hightower", "description": "A conversation on how inference is changing infrastructure, what platform teams should build now, and what the community should avoid repeating.", "meta": "45 min" },
+    { "pst": "9:00 A.M.", "cet": "6:00 P.M. CET", "type": "LIVE PANELS", "title": "Live Conversations on the Future of AI Infrastructure", "description": "Open source maintainers, infrastructure leaders, and practitioners discuss the technologies, patterns, and challenges shaping production AI infrastructure.", "meta": "90 min · Session titles announced with the final speaker lineup" },
+    { "pst": "10:30 A.M.", "cet": "7:30 P.M. CET", "type": "INFERENCE 101", "title": "Viktor Farcic", "description": "A practical look at the emerging AI inference stack and what cloud native and platform engineers need to know.", "meta": "30 min" },
+    { "pst": "11:00 A.M.", "cet": "8:00 P.M. CET", "type": null, "title": "Wrap-up", "description": null, "meta": "Modelplane team" }
+  ]
+}

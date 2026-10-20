@@ -1,0 +1,16 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Modelplane//Inference Day//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+BEGIN:VEVENT
+UID:inference-day-2026-11-05@modelplane.ai
+DTSTAMP:20261020T000000Z
+DTSTART:20261105T160000Z
+DTEND:20261105T190000Z
+SUMMARY:Inference Day
+URL:https://modelplane.ai/inference-day
+DESCRIPTION:Free, live virtual event on the future of AI infrastructure. The StreamYard link is sent on registration.
+LOCATION:Virtual
+END:VEVENT
+END:VCALENDAR
