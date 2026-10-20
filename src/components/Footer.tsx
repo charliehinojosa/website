@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import SocialIcons from '@/components/SocialIcons'
 
 export default function Footer() {
@@ -6,9 +7,9 @@ export default function Footer() {
       <div className="wrap">
         <div className="footer-inner">
           <div className="footer-left">
-            <a href="/" className="footer-logo">
+            <Link href="/" className="footer-logo">
               <img src="/icon-color.svg" alt="Modelplane" height={32} />
-            </a>
+            </Link>
             <span className="footer-tagline">Open source control plane for AI models</span>
             <p className="footer-legal">
               © 2026 The Modelplane Authors. Modelplane™ is a trademark.
@@ -16,8 +17,8 @@ export default function Footer() {
           </div>
           <div className="footer-right">
             <a href="https://docs.modelplane.ai">Docs</a>
-            <a href="/blog">Blog</a>
-            <a href="/privacy">Privacy</a>
+            <Link href="/blog">Blog</Link>
+            <Link href="/privacy">Privacy</Link>
             <SocialIcons />
           </div>
         </div>

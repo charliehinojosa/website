@@ -31,7 +31,7 @@ layout, frontmatter, and assets.
 
 ## Before you open a pull request
 
-Run these locally; CI runs the last two on every pull request:
+Run these locally; CI runs them on every pull request:
 
 ```bash
 npm run lint

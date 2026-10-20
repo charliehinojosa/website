@@ -39,6 +39,8 @@ export default function BlogSidebar({ recent, tagCounts }: BlogSidebarProps) {
 
       <div className="sidebar-widget">
         <h2 className="sidebar-title">Subscribe</h2>
+        {/* A plain link: the feed is XML, not a page Link can navigate to. */}
+        {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
         <a className="sidebar-rss" href="/feed.xml">
           <svg className="rss-icon" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
             <path
