@@ -1,0 +1,546 @@
+/* Inference Day registration page (/inference-day).
+   Everything is scoped under .id-page so none of it leaks into the main site.
+   Tokens come from the handoff's data/tokens.css; existing globals already define
+   --mp-dark-spruce (#001D2F), --mp-purple (#9A5EFC) and --mp-sky (#00DCE8), which
+   we alias here. Buttons reuse the global .btn-primary / .btn-ghost. */
+
+.id-page {
+  --id-midnight: #001C2E;                   /* page background, form inputs */
+  --id-hero: var(--mp-dark-spruce, #001D2F); /* hero + closing CTA background */
+  --id-teal: #03394A;                        /* form card, speakers band, agenda gradient end */
+  --id-violet: var(--mp-purple, #9A5EFC);    /* PRIMARY BUTTONS ONLY */
+  --id-azure: #3FA0F5;                        /* agenda session-type labels */
+  --id-cyan: var(--mp-sky, #00DCE8);          /* eyebrows, date line, times, highlight copy */
+  --id-photo-bg: #1B3D55;
+  --id-white-80: rgba(255, 255, 255, .80);
+  --id-white-72: rgba(255, 255, 255, .72);
+  --id-white-60: rgba(255, 255, 255, .60);
+  --id-line: rgba(255, 255, 255, .16);
+  --id-field-border: rgba(255, 255, 255, .20);
+  --id-wordmark: linear-gradient(90deg, #9A5EFC 0%, #00DCE8 100%);
+  --id-radius-card: 26px;
+  --id-radius-field: 12px;
+  --id-gutter: clamp(20px, 6.2vw, 89px);     /* 89px at 1440 */
+  --id-section-y: clamp(64px, 6.7vw, 96px);
+  --font-display: 'Outfit', sans-serif;
+  --font-body: 'Inter', sans-serif;
+
+  background: var(--id-midnight);
+  color: #fff;
+  font-family: var(--font-body);
+}
+
+/* The page sets its own background; pin html and body to the same midnight so
+   there is no seam under a short viewport and no white band on overscroll at the
+   top (hero) or bottom (footer). Scoped via :has so other pages are untouched.
+   A literal colour is used because --id-midnight is defined on .id-page, which
+   is a child of body, and custom properties do not inherit upward. */
+html:has(.id-page),
+body:has(.id-page) { background: #001C2E; }
+
+.id-page * { box-sizing: border-box; }
+
+/* Content column: 1262px of content with the gutter on either side (1440 total). */
+.id-wrap {
+  width: 100%;
+  max-width: calc(1262px + 2 * var(--id-gutter));
+  margin-inline: auto;
+  padding-inline: var(--id-gutter);
+}
+
+.id-page section { scroll-margin-top: 84px; } /* clear the sticky nav on anchor jumps */
+
+/* ── Shared type ──────────────────────────────────────────────────────────── */
+.id-wordmark {
+  font-family: var(--font-display);
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  line-height: 1.02;
+  background: var(--id-wordmark);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+.id-eyebrow {
+  font: 400 13px/1.3 var(--font-body);
+  letter-spacing: .10em;
+  text-transform: uppercase;
+  color: var(--id-cyan);
+  margin: 0;
+}
+.id-h2 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(32px, 3.8vw, 52px);
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  margin: 14px 0 0;
+}
+.id-photo {
+  border: 2px solid #fff;
+  border-radius: var(--id-radius-card);
+  background: var(--id-photo-bg);
+  object-fit: cover;
+  display: block;
+}
+
+/* Full-width primary submit button on the form. */
+.id-page .btn-primary.id-btn-block {
+  width: 100%;
+  justify-content: center;
+  padding-top: 0;
+  padding-bottom: 0;
+  height: 48px;
+}
+
+/* ── 3.1 Nav ──────────────────────────────────────────────────────────────── */
+.id-nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(0, 28, 46, .82);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--id-line);
+}
+.id-nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding-block: 16px;
+}
+.id-nav-logo { display: inline-flex; align-items: center; }
+.id-nav-logo img { height: 26px; width: auto; display: block; }
+.id-nav-links {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.id-nav-links a {
+  font: 400 14px/1 var(--font-body);
+  color: var(--id-white-72);
+  text-decoration: none;
+  transition: color .18s;
+}
+.id-nav-links a:hover { color: #fff; }
+.id-nav-links .btn-primary { color: #fff; }
+.id-nav-toggle {
+  display: none;
+  background: none;
+  border: 0;
+  padding: 8px;
+  cursor: pointer;
+}
+.id-nav-toggle span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  margin: 4px 0;
+  background: #fff;
+  transition: transform .2s, opacity .2s;
+}
+.id-nav-mobile { display: none; }
+
+/* ── 3.2 Hero ─────────────────────────────────────────────────────────────── */
+.id-hero {
+  position: relative;
+  overflow: hidden;
+  background: var(--id-hero);
+  padding-block: clamp(56px, 7vw, 96px) clamp(72px, 8vw, 120px);
+}
+.id-hero-art {
+  position: absolute;
+  top: -133px;
+  right: 0;
+  width: min(1200px, 115%);
+  max-width: none;
+  height: auto;
+  pointer-events: none;
+  z-index: 0;
+}
+.id-hero-inner { position: relative; z-index: 1; max-width: 760px; }
+.id-hero h1 {
+  font-size: clamp(56px, 9.7vw, 140px);
+  margin: 0;
+}
+.id-hero-intro {
+  font: 400 clamp(18px, 1.7vw, 24px)/1.35 var(--font-body);
+  color: #fff;
+  margin: 22px 0 0;
+  max-width: 620px;
+}
+.id-hero-intro span { display: block; }
+.id-date {
+  font: 400 clamp(16px, 1.5vw, 22px)/1.4 var(--font-body);
+  letter-spacing: .10em;
+  text-transform: uppercase;
+  color: var(--id-cyan);
+  margin: 26px 0 0;
+}
+.id-hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: 34px;
+}
+.id-hero-lockup {
+  position: absolute;
+  right: var(--id-gutter);
+  bottom: 28px;
+  width: 612px;
+  max-width: 48%;
+  height: auto;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* ── 3.3 About + Register ─────────────────────────────────────────────────── */
+.id-register { padding-block: var(--id-section-y); }
+.id-register-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 480px;
+  gap: 96px;
+  align-items: start;
+}
+.id-about-h2 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(32px, 3.8vw, 52px);
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  margin: 14px 0 0;
+}
+.id-about p {
+  font: 400 18px/1.6 var(--font-body);
+  color: #fff;
+  margin: 20px 0 0;
+}
+.id-about .id-about-highlight { color: var(--id-cyan); }
+
+/* Form card */
+.id-form-card {
+  background: var(--id-teal);
+  border: 1px solid var(--id-field-border);
+  border-radius: var(--id-radius-card);
+  padding: 36px;
+}
+.id-form-card h3 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 32px;
+  line-height: 1.1;
+  margin: 10px 0 24px;
+}
+
+/* StreamYard registration embed. Sits inside the form card in place of the
+   custom fields. StreamYard's own snippet is 16:9; in this narrow column that
+   is too short for a registration form, so we floor the height. Adjust
+   --id-embed-h once the real embed height is known. */
+.id-embed {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  min-height: var(--id-embed-h, 480px);
+  border-radius: var(--id-radius-field);
+  overflow: hidden;
+  background: var(--id-midnight);
+}
+.id-embed iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+}
+
+.id-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+.id-field { display: flex; flex-direction: column; gap: 7px; }
+.id-field--full { grid-column: 1 / -1; }
+.id-field label {
+  font: 500 13px/1 var(--font-body);
+  color: #fff;
+}
+.id-field input {
+  height: 48px;
+  border-radius: var(--id-radius-field);
+  background: var(--id-midnight);
+  border: 1px solid var(--id-field-border);
+  color: #fff;
+  font: 400 15px/1 var(--font-body);
+  padding: 0 14px;
+  transition: border-color .18s, box-shadow .18s;
+}
+.id-field input::placeholder { color: rgba(255, 255, 255, .45); }
+.id-field input:focus {
+  outline: none;
+  border-color: var(--id-cyan);
+  box-shadow: 0 0 0 3px rgba(0, 220, 232, .25);
+}
+.id-form-submit { margin-top: 20px; }
+.id-form-fine {
+  font: 400 12px/1.5 var(--font-body);
+  color: var(--id-white-72);
+  margin: 16px 0 0;
+}
+.id-form-fine a { color: var(--id-cyan); }
+.id-form-status {
+  font: 400 14px/1.5 var(--font-body);
+  margin: 14px 0 0;
+}
+.id-form-status--error { color: #F3807B; }
+.id-form-success {
+  text-align: center;
+  padding: 24px 8px;
+}
+.id-form-success h3 { margin: 0 0 8px; }
+.id-form-success p { color: var(--id-white-80); font: 400 15px/1.55 var(--font-body); margin: 0; }
+
+/* ── 3.4 Agenda ───────────────────────────────────────────────────────────── */
+.id-agenda {
+  background: linear-gradient(180deg, #001C2E 0%, #03394A 100%);
+  padding-block: var(--id-section-y);
+}
+.id-agenda-list {
+  list-style: none;
+  margin: 40px 0 0;
+  padding: 0;
+}
+.id-agenda-row {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 24px;
+  padding-block: 28px;
+  border-bottom: 1px solid var(--id-line);
+}
+.id-agenda-row:first-child { border-top: 1px solid var(--id-line); }
+.id-agenda-time .pst {
+  font: 400 18px/1.3 var(--font-body);
+  letter-spacing: .06em;
+  color: var(--id-cyan);
+}
+.id-agenda-time .cet {
+  font: 400 14px/1.4 var(--font-body);
+  color: rgba(0, 220, 232, .65);
+  margin-top: 4px;
+}
+.id-agenda-type {
+  font: 400 13px/1 var(--font-body);
+  letter-spacing: .10em;
+  text-transform: uppercase;
+  color: var(--id-azure);
+  margin: 0 0 8px;
+}
+.id-agenda-title {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(22px, 2.3vw, 28px);
+  line-height: 1.1;
+  margin: 0;
+}
+.id-agenda-desc {
+  font: 400 17px/1.55 var(--font-body);
+  color: #fff;
+  margin: 10px 0 0;
+  max-width: 760px;
+}
+.id-agenda-meta {
+  font: 400 16px/1.4 var(--font-body);
+  color: var(--id-white-72);
+  margin: 10px 0 0;
+}
+
+/* ── 3.5 Speakers ─────────────────────────────────────────────────────────── */
+.id-speakers {
+  background: var(--id-teal);
+  padding-block: var(--id-section-y);
+}
+.id-featured {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: clamp(32px, 5vw, 72px);
+  margin-top: 48px;
+}
+.id-featured--large {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  flex: 1 1 560px;
+}
+.id-featured--large .id-photo { width: 300px; height: 392px; object-position: center top; flex: none; }
+.id-featured--small {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  flex: 0 1 420px;
+}
+.id-featured--small .id-photo { width: 150px; height: 196px; object-position: center top; flex: none; }
+.id-featured-name-lg {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(44px, 5vw, 72px);
+  line-height: 1;
+  margin: 12px 0 0;
+}
+.id-featured-name-sm {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 34px;
+  line-height: 1.05;
+  margin: 10px 0 0;
+}
+.id-featured-bio-lg {
+  font: 400 18px/1.5 var(--font-body);
+  color: var(--id-white-80);
+  margin: 16px 0 0;
+  max-width: 420px;
+}
+.id-featured-bio-sm {
+  font: 400 15px/1.5 var(--font-body);
+  color: var(--id-white-80);
+  margin: 12px 0 0;
+  max-width: 260px;
+}
+
+.id-panelists-label { margin-top: 72px; }
+.id-panel-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  column-gap: 32px;
+  row-gap: 48px;
+  margin-top: 28px;
+}
+.id-panel-card .id-photo {
+  width: 150px;
+  height: 150px;
+  aspect-ratio: 1;
+  border-radius: var(--id-radius-card);
+}
+.id-panel-name {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 26px;
+  line-height: 1.1;
+  margin: 16px 0 0;
+}
+.id-panel-role {
+  font: 400 15px/1.4 var(--font-body);
+  color: #fff;
+  margin: 8px 0 0;
+}
+.id-panel-project {
+  font: 400 14px/1.45 var(--font-body);
+  color: var(--id-white-72);
+  margin: 4px 0 0;
+}
+.id-panel-footnote {
+  font: 400 15px/1.5 var(--font-body);
+  color: var(--id-white-72);
+  margin: 40px 0 0;
+}
+
+/* ── 3.6 Closing CTA ──────────────────────────────────────────────────────── */
+.id-cta {
+  position: relative;
+  overflow: hidden;
+  background: var(--id-hero);
+  padding-block: clamp(72px, 9vw, 120px);
+}
+.id-cta-art {
+  position: absolute;
+  right: 0;
+  bottom: -40px;
+  width: min(1100px, 110%);
+  height: auto;
+  opacity: .85;
+  pointer-events: none;
+  z-index: 0;
+}
+.id-cta-inner { position: relative; z-index: 1; }
+.id-cta h2 {
+  font-size: clamp(48px, 6.1vw, 88px);
+  margin: 0;
+}
+.id-cta-line {
+  font: 400 24px/1.4 var(--font-body);
+  color: #fff;
+  margin: 20px 0 0;
+}
+
+/* ── 3.7 Event lockup row (above the shared site footer) ──────────────────── */
+.id-footer-lockup {
+  background: var(--id-midnight);
+  padding-block: 36px;
+}
+.id-footer-lockup img { width: 420px; max-width: 70%; height: auto; display: block; }
+
+/* The shared site <Footer> defaults to spruce (#001D2F); on the event page pin it
+   to the same midnight as the rest of the page and match the divider to the event
+   theme so the lockup row and footer read as one continuous dark band. */
+.id-page footer {
+  background: var(--id-midnight);
+  border-top-color: var(--id-line);
+}
+
+/* ── Responsive ───────────────────────────────────────────────────────────── */
+@media (max-width: 1100px) {
+  .id-panel-grid { grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width: 1024px) {
+  .id-register-grid { grid-template-columns: 1fr; gap: 48px; }
+  .id-form-card { order: 2; }
+  .id-hero-inner { max-width: none; }
+}
+@media (max-width: 860px) {
+  .id-nav-links { display: none; }
+  .id-nav-toggle { display: block; }
+  .id-nav-mobile.open {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 8px var(--id-gutter) 20px;
+    border-top: 1px solid var(--id-line);
+  }
+  .id-nav-mobile a {
+    font: 400 16px/1 var(--font-body);
+    color: #fff;
+    text-decoration: none;
+    padding: 12px 0;
+  }
+  .id-hero-lockup {
+    position: static;
+    display: block;
+    width: 70%;
+    max-width: 420px;
+    margin: 40px 0 0;
+  }
+  .id-featured--large,
+  .id-featured--small { flex-basis: 100%; }
+}
+@media (max-width: 640px) {
+  .id-page { --id-gutter: 20px; }
+  .id-panel-grid { grid-template-columns: repeat(2, 1fr); column-gap: 20px; }
+  .id-panel-card .id-photo { width: 100%; height: auto; }
+  .id-form-grid { grid-template-columns: 1fr; }
+  .id-agenda-row { grid-template-columns: 1fr; gap: 10px; }
+  .id-featured--large { flex-direction: column; align-items: flex-start; gap: 20px; }
+  .id-featured--large .id-photo { width: 100%; height: auto; aspect-ratio: 3 / 4; }
+  .id-hero-actions .btn-primary,
+  .id-hero-actions .btn-ghost,
+  .id-cta-actions .btn-primary,
+  .id-cta-actions .btn-ghost { flex: 1 1 100%; justify-content: center; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .id-page * { animation: none !important; transition: none !important; }
+}
