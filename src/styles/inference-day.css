@@ -153,13 +153,18 @@ body:has(.id-page) { background: #001C2E; }
   background: var(--id-hero);
   padding-block: clamp(56px, 7vw, 96px) clamp(72px, 8vw, 120px);
 }
+/* The contrail is sized as a share of the hero width (not a fixed px width) so
+   its composition stays locked across viewports: the flight-path fan always
+   lands just right of the text column and the lines run to the right edge,
+   instead of crowding the text on 1440 screens or hugging the edge on wide ones.
+   Anchored to the right and vertically centred. */
 .id-hero-art {
   position: absolute;
-  top: -133px;
+  top: 50%;
   right: 0;
-  width: min(1200px, 115%);
-  max-width: none;
+  width: 66%;
   height: auto;
+  transform: translateY(-50%);
   pointer-events: none;
   z-index: 0;
 }
@@ -459,8 +464,8 @@ body:has(.id-page) { background: #001C2E; }
 .id-cta-art {
   position: absolute;
   right: 0;
-  bottom: -40px;
-  width: min(1100px, 110%);
+  bottom: 0;
+  width: 66%;
   height: auto;
   opacity: .85;
   pointer-events: none;
