@@ -193,15 +193,15 @@ body:has(.id-page) { background: #001C2E; }
   gap: 16px;
   margin-top: 28px;
 }
-/* "Hosted by / Sponsored by" lockup: a normal flow element, centred under the
-   buttons, so it places predictably on desktop, tablet and mobile (rather than
-   floating over the hero art). */
+/* "Hosted by / Sponsored by" lockup: a normal flow element left-aligned under
+   the buttons, so it sits on clean dark below the copy rather than centred over
+   the wave pattern (where it got lost). Places predictably on every breakpoint. */
 .id-hero-lockup {
   display: block;
   width: 440px;
   max-width: 100%;
   height: auto;
-  margin: 44px auto 0;
+  margin: 44px 0 0;
 }
 
 /* ── 3.3 About + Register ─────────────────────────────────────────────────── */
