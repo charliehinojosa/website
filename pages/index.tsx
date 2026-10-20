@@ -35,7 +35,7 @@ export default function Home() {
   return (
     <>
       <Seo url={SITE_URL} />
-      <Nav />
+      <Nav hero />
       <Hero />
       <hr className="divider" />
       <Partners />

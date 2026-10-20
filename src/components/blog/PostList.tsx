@@ -12,12 +12,14 @@ interface PostListProps {
 // Renders a grid of post cards, revealing more as the reader scrolls (infinite scroll).
 export default function PostList({ posts }: PostListProps) {
   const [visible, setVisible] = useState(INITIAL)
+  const [shownPosts, setShownPosts] = useState(posts)
   const sentinelRef = useRef<HTMLDivElement | null>(null)
 
   // Restart from the top whenever the underlying list changes (e.g. a new search).
-  useEffect(() => {
+  if (posts !== shownPosts) {
+    setShownPosts(posts)
     setVisible(INITIAL)
-  }, [posts])
+  }
 
   useEffect(() => {
     if (visible >= posts.length) return

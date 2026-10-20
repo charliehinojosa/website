@@ -1,17 +1,23 @@
 import { useState, useEffect } from 'react'
+import Link from 'next/link'
 import GithubIcon from '@/components/GithubIcon'
 
 const GITHUB_URL = 'https://github.com/modelplaneai/modelplane'
 const SLACK_URL = 'https://slack.modelplane.ai'
 
-export default function Nav() {
+interface NavProps {
+  // Set on pages that render the hero (the homepage).
+  hero?: boolean
+}
+
+export default function Nav({ hero = false }: NavProps) {
   const [open, setOpen] = useState(false)
   // On the homepage the hero shows its own large wordmark, so we hide the nav
   // logo while the hero is in view (avoids two logos). Once the hero scrolls
   // away, the nav slides in with the logo and stays sticky. Pages without a
   // hero just show the logo normally.
-  const [past, setPast] = useState(false)
-  const [heroPage, setHeroPage] = useState(false)
+  const [heroInView, setHeroInView] = useState(true)
+  const past = !hero || !heroInView
 
   // Close menu on route/hash change
   useEffect(() => {
@@ -21,36 +27,33 @@ export default function Nav() {
   }, [])
 
   useEffect(() => {
-    const hero = document.querySelector('.herox')
-    if (!hero) {
-      setPast(true) // no hero on this page → show the logo normally
-      return
-    }
-    setHeroPage(true)
+    if (!hero) return
+    const heroEl = document.querySelector('.herox')
+    if (!heroEl) return
     const obs = new IntersectionObserver(
-      ([entry]) => setPast(!entry.isIntersecting),
+      ([entry]) => setHeroInView(entry.isIntersecting),
       { rootMargin: '-64px 0px 0px 0px', threshold: 0 }
     )
-    obs.observe(hero)
+    obs.observe(heroEl)
     return () => obs.disconnect()
-  }, [])
+  }, [hero])
 
   const navClass = [
     !past ? 'nav--top' : '',
-    past && heroPage ? 'nav--reveal' : '',
+    past && hero ? 'nav--reveal' : '',
   ].filter(Boolean).join(' ')
 
   return (
     <nav className={navClass}>
       <div className="wrap">
-        <a href="/" className="nav-logo">
+        <Link href="/" className="nav-logo">
           <img src="/icon-color.svg" alt="Modelplane" height={32} />
-        </a>
+        </Link>
 
         <ul className="nav-links">
           <li><a href="https://docs.modelplane.ai">Docs</a></li>
-          <li><a href="/blog">Blog</a></li>
-          <li><a href="/manifesto">Manifesto</a></li>
+          <li><Link href="/blog">Blog</Link></li>
+          <li><Link href="/manifesto">Manifesto</Link></li>
           <li><a href={SLACK_URL} target="_blank" rel="noopener noreferrer">Slack</a></li>
           <li><a href={GITHUB_URL} target="_blank" rel="noopener noreferrer" aria-label="GitHub"><GithubIcon /></a></li>
           <li><a href={GITHUB_URL} className="nav-cta-ghost" target="_blank" rel="noopener noreferrer">★ Star the Project</a></li>
@@ -69,8 +72,8 @@ export default function Nav() {
       {open && (
         <div className="nav-dropdown">
           <a href="https://docs.modelplane.ai" onClick={() => setOpen(false)}>Docs</a>
-          <a href="/blog" onClick={() => setOpen(false)}>Blog</a>
-          <a href="/manifesto" onClick={() => setOpen(false)}>Manifesto</a>
+          <Link href="/blog" onClick={() => setOpen(false)}>Blog</Link>
+          <Link href="/manifesto" onClick={() => setOpen(false)}>Manifesto</Link>
           <a href={SLACK_URL} target="_blank" rel="noopener noreferrer" onClick={() => setOpen(false)}>Slack</a>
           <a href={GITHUB_URL} target="_blank" rel="noopener noreferrer" aria-label="GitHub" onClick={() => setOpen(false)}><GithubIcon /></a>
           <a href={GITHUB_URL} className="nav-cta-mobile" target="_blank" rel="noopener noreferrer" onClick={() => setOpen(false)}>★ Star the Project</a>

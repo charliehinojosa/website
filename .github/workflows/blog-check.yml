@@ -1,7 +1,8 @@
 name: Blog check
 
-# Validates blog post frontmatter and runs a full build on PRs that touch blog
-# content or the website code, so broken MDX or missing fields are caught before merge.
+# Lints the code, validates blog post frontmatter, and runs a full build on PRs that
+# touch blog content or the website code, so lint errors, broken MDX, or missing
+# fields are caught before merge.
 on:
   pull_request:
     paths:
@@ -9,6 +10,7 @@ on:
       - 'pages/blog/**'
       - 'src/**'
       - 'package.json'
+      - 'eslint.config.mjs'
 
 jobs:
   build:
@@ -20,6 +22,8 @@ jobs:
           node-version: 20
           cache: npm
       - run: npm ci
+      - name: Lint
+        run: npm run lint
       - name: Validate frontmatter
         run: node scripts/validate-posts.mjs
       - name: Build
