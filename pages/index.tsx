@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import Seo from '@/components/Seo'
 import { SITE_URL } from '@/lib/site'
+import AnnouncementBar from '@/components/AnnouncementBar'
 import Nav from '@/components/Nav'
 import Hero from '@/components/Hero'
 import Capabilities from '@/components/Capabilities'
@@ -35,6 +36,7 @@ export default function Home() {
   return (
     <>
       <Seo url={SITE_URL} />
+      <AnnouncementBar />
       <Nav />
       <Hero />
       <hr className="divider" />
