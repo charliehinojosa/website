@@ -1862,3 +1862,10 @@ a.post-tag:hover { border-color: var(--border-hi); color: var(--text); }
 @media (max-width: 420px) {
   .announce-tag { display: none; }
 }
+
+/* Inference Day event link in the main nav — a subtle cyan accent so the
+   time-sensitive event stands out next to the standard nav items. */
+.nav-links .nav-event,
+.nav-dropdown .nav-event { color: var(--cyan); }
+.nav-links .nav-event:hover,
+.nav-dropdown .nav-event:hover { color: var(--purple-hi); }

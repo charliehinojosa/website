@@ -48,7 +48,7 @@ body:has(.id-page) { background: #001C2E; }
   padding-inline: var(--id-gutter);
 }
 
-.id-page section { scroll-margin-top: 84px; } /* clear the sticky nav on anchor jumps */
+.id-page section { scroll-margin-top: 128px; } /* clear the main nav + event sub-nav on anchor jumps */
 
 /* ── Shared type ──────────────────────────────────────────────────────────── */
 .id-wordmark {
@@ -94,57 +94,54 @@ body:has(.id-page) { background: #001C2E; }
   height: 48px;
 }
 
-/* ── 3.1 Nav ──────────────────────────────────────────────────────────────── */
-.id-nav {
+/* ── Event sub-nav ──────────────────────────────────────────────────────────
+   Sits directly below the main site <Nav /> and sticks under it, carrying the
+   on-page jump links. The main nav is sticky at top:0 (z 100); this pins just
+   below it. .id-subnav is a <nav>, so it overrides the global nav rules. */
+.id-subnav {
   position: sticky;
-  top: 0;
-  z-index: 100;
-  background: rgba(0, 28, 46, .82);
+  top: 65px;
+  z-index: 90;
+  background: rgba(3, 57, 74, .85);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border-bottom: 1px solid var(--id-line);
 }
-.id-nav-inner {
+.id-subnav-inner {
   display: flex;
   align-items: center;
-  justify-content: space-between;
   gap: 24px;
-  padding-block: 16px;
+  min-height: 44px;
+  padding-block: 8px;
 }
-.id-nav-logo { display: inline-flex; align-items: center; }
-.id-nav-logo img { height: 26px; width: auto; display: block; }
-.id-nav-links {
-  display: flex;
-  align-items: center;
-  gap: 28px;
-  margin: 0;
-  padding: 0;
-  list-style: none;
+.id-subnav-label {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 15px;
+  letter-spacing: -0.01em;
+  color: #fff;
+  text-decoration: none;
+  white-space: nowrap;
 }
-.id-nav-links a {
+.id-subnav-links { display: flex; gap: 22px; }
+.id-subnav-links a {
   font: 400 14px/1 var(--font-body);
   color: var(--id-white-72);
   text-decoration: none;
   transition: color .18s;
 }
-.id-nav-links a:hover { color: #fff; }
-.id-nav-links .btn-primary { color: #fff; }
-.id-nav-toggle {
-  display: none;
-  background: none;
-  border: 0;
-  padding: 8px;
-  cursor: pointer;
+.id-subnav-links a:hover { color: #fff; }
+.id-page .id-subnav-cta {
+  margin-left: auto;
+  font-size: 13px;
+  padding: 8px 18px;
 }
-.id-nav-toggle span {
-  display: block;
-  width: 22px;
-  height: 2px;
-  margin: 4px 0;
-  background: #fff;
-  transition: transform .2s, opacity .2s;
+@media (max-width: 640px) {
+  .id-subnav-label { display: none; }
+  .id-page .id-subnav-cta { display: none; }
+  .id-subnav-inner { gap: 0; }
+  .id-subnav-links { width: 100%; justify-content: space-around; gap: 12px; }
 }
-.id-nav-mobile { display: none; }
 
 /* ── 3.2 Hero ─────────────────────────────────────────────────────────────── */
 .id-hero {

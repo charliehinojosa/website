@@ -1,7 +1,8 @@
 import Seo from '@/components/Seo'
 import Footer from '@/components/Footer'
+import Nav from '@/components/Nav'
 import { SITE_URL } from '@/lib/site'
-import EventNav from '@/components/inference-day/EventNav'
+import EventSubNav from '@/components/inference-day/EventSubNav'
 import EventHero from '@/components/inference-day/EventHero'
 import RegisterSection from '@/components/inference-day/RegisterSection'
 import Agenda from '@/components/inference-day/Agenda'
@@ -54,7 +55,8 @@ export default function InferenceDay() {
       </Seo>
 
       <div className="id-page">
-        <EventNav />
+        <Nav />
+        <EventSubNav />
         <main>
           <EventHero />
           <RegisterSection />
