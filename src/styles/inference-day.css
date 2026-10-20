@@ -28,6 +28,10 @@
   background: var(--id-midnight);
   color: #fff;
   font-family: var(--font-body);
+  /* Safety net: never let a wide child (e.g. the StreamYard iframe, which iOS
+     Safari sizes to its content) push the page past the viewport. `clip` keeps
+     the sticky sub-nav working, which `hidden` would break. */
+  overflow-x: clip;
 }
 
 /* The page sets its own background; pin html and body to the same midnight so
@@ -212,6 +216,10 @@ body:has(.id-page) { background: #001C2E; }
   gap: 96px;
   align-items: start;
 }
+/* Let both columns shrink below their content's intrinsic width. Without this,
+   the StreamYard iframe's large min-content width (on iOS especially) forces the
+   track wider than the viewport and drags the About column off-screen with it. */
+.id-register-grid > * { min-width: 0; }
 .id-about-h2 {
   font-family: var(--font-display);
   font-weight: 500;
@@ -504,7 +512,7 @@ body:has(.id-page) { background: #001C2E; }
   .id-panel-grid { grid-template-columns: repeat(3, 1fr); }
 }
 @media (max-width: 1024px) {
-  .id-register-grid { grid-template-columns: 1fr; gap: 48px; }
+  .id-register-grid { grid-template-columns: minmax(0, 1fr); gap: 48px; }
   .id-form-card { order: 2; }
   .id-hero-inner { max-width: none; }
 }
@@ -514,6 +522,7 @@ body:has(.id-page) { background: #001C2E; }
 }
 @media (max-width: 640px) {
   .id-page { --id-gutter: 20px; }
+  .id-form-card { padding: 24px; }
   .id-panel-grid { grid-template-columns: repeat(2, 1fr); column-gap: 20px; }
   .id-panel-card .id-photo { width: 100%; height: auto; }
   .id-form-grid { grid-template-columns: 1fr; }
