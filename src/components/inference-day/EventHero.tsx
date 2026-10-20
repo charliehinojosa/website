@@ -23,14 +23,14 @@ export default function EventHero() {
           </p>
 
           <EventActions />
+
+          <img
+            src="/inference-day/lockup.png"
+            alt="Hosted by Modelplane · Sponsored by Upbound"
+            className="id-hero-lockup"
+          />
         </div>
       </div>
-
-      <img
-        src="/inference-day/lockup.png"
-        alt="Hosted by Modelplane · Sponsored by Upbound"
-        className="id-hero-lockup"
-      />
     </section>
   )
 }

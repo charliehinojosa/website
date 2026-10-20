@@ -55,6 +55,7 @@ export default function Nav({ hero = false }: NavProps) {
           <li><Link href="/blog">Blog</Link></li>
           <li><Link href="/manifesto">Manifesto</Link></li>
           <li><a href={SLACK_URL} target="_blank" rel="noopener noreferrer">Slack</a></li>
+          <li><Link href="/inference-day" className="nav-event">Inference Day</Link></li>
           <li><a href={GITHUB_URL} target="_blank" rel="noopener noreferrer" aria-label="GitHub"><GithubIcon /></a></li>
           <li><a href={GITHUB_URL} className="nav-cta-ghost" target="_blank" rel="noopener noreferrer">★ Star the Project</a></li>
           <li><a href="https://docs.modelplane.ai/getting-started/" className="nav-cta">Get started →</a></li>
@@ -75,6 +76,7 @@ export default function Nav({ hero = false }: NavProps) {
           <Link href="/blog" onClick={() => setOpen(false)}>Blog</Link>
           <Link href="/manifesto" onClick={() => setOpen(false)}>Manifesto</Link>
           <a href={SLACK_URL} target="_blank" rel="noopener noreferrer" onClick={() => setOpen(false)}>Slack</a>
+          <Link href="/inference-day" className="nav-event" onClick={() => setOpen(false)}>Inference Day</Link>
           <a href={GITHUB_URL} target="_blank" rel="noopener noreferrer" aria-label="GitHub" onClick={() => setOpen(false)}><GithubIcon /></a>
           <a href={GITHUB_URL} className="nav-cta-mobile" target="_blank" rel="noopener noreferrer" onClick={() => setOpen(false)}>★ Star the Project</a>
           <a href="https://docs.modelplane.ai/getting-started/" className="nav-cta-mobile" onClick={() => setOpen(false)}>Get started →</a>

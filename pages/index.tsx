@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import Seo from '@/components/Seo'
 import { SITE_URL } from '@/lib/site'
+import dynamic from 'next/dynamic'
 import Nav from '@/components/Nav'
 import Hero from '@/components/Hero'
 import Capabilities from '@/components/Capabilities'
@@ -10,6 +11,9 @@ import HowItWorks from '@/components/HowItWorks'
 import OpenSource from '@/components/OpenSource'
 import Partners from '@/components/Partners'
 import Footer from '@/components/Footer'
+
+// Client-only: its visibility depends on localStorage and the current date.
+const AnnouncementBar = dynamic(() => import('@/components/AnnouncementBar'), { ssr: false })
 
 export default function Home() {
   // Set up scroll-reveal observer (mirrors the original HTML script)
@@ -35,6 +39,7 @@ export default function Home() {
   return (
     <>
       <Seo url={SITE_URL} />
+      <AnnouncementBar />
       <Nav hero />
       <Hero />
       <hr className="divider" />
