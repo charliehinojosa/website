@@ -30,9 +30,13 @@
   font-family: var(--font-body);
 }
 
-/* The page sets its own background; make sure the body matches so there is no
-   seam under a short viewport. Scoped via :has so other pages are untouched. */
-body:has(.id-page) { background: var(--id-midnight); }
+/* The page sets its own background; pin html and body to the same midnight so
+   there is no seam under a short viewport and no white band on overscroll at the
+   top (hero) or bottom (footer). Scoped via :has so other pages are untouched.
+   A literal colour is used because --id-midnight is defined on .id-page, which
+   is a child of body, and custom properties do not inherit upward. */
+html:has(.id-page),
+body:has(.id-page) { background: #001C2E; }
 
 .id-page * { box-sizing: border-box; }
 
@@ -456,6 +460,14 @@ body:has(.id-page) { background: var(--id-midnight); }
   padding-block: 36px;
 }
 .id-footer-lockup img { width: 420px; max-width: 70%; height: auto; display: block; }
+
+/* The shared site <Footer> defaults to spruce (#001D2F); on the event page pin it
+   to the same midnight as the rest of the page and match the divider to the event
+   theme so the lockup row and footer read as one continuous dark band. */
+.id-page footer {
+  background: var(--id-midnight);
+  border-top-color: var(--id-line);
+}
 
 /* ── Responsive ───────────────────────────────────────────────────────────── */
 @media (max-width: 1100px) {
