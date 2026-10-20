@@ -158,7 +158,7 @@ body:has(.id-page) { background: #001C2E; }
    rather than being cut off. The hero clips the overflow; text sits above (z 1). */
 .id-hero-art {
   position: absolute;
-  top: -9.2vw;
+  top: -33vw;
   right: 0;
   width: 108.5vw;
   min-width: 1040px;
@@ -535,9 +535,10 @@ body:has(.id-page) { background: #001C2E; }
   .id-page * { animation: none !important; transition: none !important; }
 }
 
-/* Soften the full-bleed contrail on phones so the hero/CTA text stays legible
-   over it (the wave sits behind full-width copy at this size). */
-@media (max-width: 640px) {
-  .id-hero-art { opacity: 0.5; }
-  .id-cta-art { opacity: 0.5; }
+/* On phones/small tablets the hero and CTA copy is full-width, so the full-bleed
+   wave can only sit behind the text and clutter it. Hide the decorative art at
+   these sizes and keep the clean solid-dark hero/CTA instead. */
+@media (max-width: 768px) {
+  .id-hero-art,
+  .id-cta-art { display: none; }
 }
